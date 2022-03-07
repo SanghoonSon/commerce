@@ -23,6 +23,10 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2")
+
+    // DB Spy
+    implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.7.1")
+
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("mysql:mysql-connector-java")
