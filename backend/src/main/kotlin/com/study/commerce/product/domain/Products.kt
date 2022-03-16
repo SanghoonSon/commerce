@@ -3,7 +3,7 @@ package com.study.commerce.product.domain
 import javax.persistence.*
 
 @Entity
-class productList(
+class Products(
     @Id @GeneratedValue
     var productId: Int? = null,
     var category: String,
