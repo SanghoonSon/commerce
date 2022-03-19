@@ -27,6 +27,9 @@ dependencies {
     // DB Spy
     implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.7.1")
 
+    // lombok
+    implementation ("org.projectlombok:lombok")
+
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("mysql:mysql-connector-java")
