@@ -26,5 +26,5 @@
 <br>
 <br>
 
-<small>* 참고 : https://cheese10yun.github.io/spring-guide-directory/(전체적인 구조)</small>
-<small>* 참고 :https://wonos.tistory.com/457 (각 구조 설명 매우 잘되어 있음!)</small>
+<small>* 참고 :  https://cheese10yun.github.io/spring-guide-directory/     (전체적인 구조)</small><br>
+<small>* 참고 :  https://wonos.tistory.com/457     (각 구조 설명 매우 잘되어 있음!)</small>
