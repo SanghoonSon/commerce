@@ -7,8 +7,13 @@ import javax.persistence.*
 class Board(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var board_seq: Int? = null,
+    @Column(name = "board_id")
+   private var boardId: Int? = null,
+
     var title: String,
+
     var contents: String,
-    var user_id: String,
+
+    @Column(name = "user_id")
+    var userId: String,
 )
