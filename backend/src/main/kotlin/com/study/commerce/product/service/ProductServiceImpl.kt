@@ -5,8 +5,8 @@ import com.study.commerce.product.repository.ProductRepository
 
 class ProductServiceImpl(var productRepository: ProductRepository) : ProductService {
 
-    override fun addProduct(productId: Int, category:String,subCategory: String,productName: String,price: String): Product {
-        val product = productRepository.save(Product(productId, category,subCategory,productName,price))
+    override fun addProduct(product: Product): Product {
+        val product = productRepository.save(product)
         return product
     }
 
