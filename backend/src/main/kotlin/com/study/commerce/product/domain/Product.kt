@@ -4,11 +4,18 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "products")
-class Product(
+
+class  Product(
     @Id @GeneratedValue
-    var productId: Int? = null,
-    var category: String,
+    var productId: Long? = null,
+
+    @OneToMany(mappedBy = "Product")
+    var categoryItem: List<CategoryItem>,
+
     var subCategory: String,
     var productName: String,
-    var price: String
+
+    @Enumerated(EnumType.STRING)
+    val productStatus: ProductStatus = ProductStatus.Exist,
+    val price: Int
 )
