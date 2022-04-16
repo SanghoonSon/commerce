@@ -10,6 +10,7 @@ class  Product(
     var productId: Long? = null,
 
     @OneToMany(mappedBy = "Product")
+    @JoinColumn(name = "categoryItemId")
     var categoryItem: List<CategoryItem>,
 
     var subCategory: String,
