@@ -11,7 +11,7 @@ class CategoryItem(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productId")
-    var productId: Product,
+    var product: Product,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoryId")

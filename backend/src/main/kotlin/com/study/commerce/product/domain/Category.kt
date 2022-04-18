@@ -7,9 +7,8 @@ import javax.persistence.*
 class Category(
     @Id @GeneratedValue
     @Column(name ="category_id")
-    var categoryId: Long? = null,
+    val categoryId: Long? = null,
 
     @OneToMany(mappedBy = "Category")
-    @JoinColumn(name = "categoryItemId")
-    var categoryItem: List<CategoryItem>
+    val categoryItem: List<CategoryItem>
 )
