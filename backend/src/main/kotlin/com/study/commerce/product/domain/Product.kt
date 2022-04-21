@@ -5,12 +5,12 @@ import javax.persistence.*
 @Entity
 @Table(name = "products")
 
-class  Product(
+class Product(
     @Id @GeneratedValue
-    var productId: Long? = null,
+    val productId: Long? = null,
 
-    @OneToMany(mappedBy = "Product")
-    var categoryItem: List<CategoryItem>,
+    @OneToMany(mappedBy = "product")
+    val categoryItem: List<CategoryItem>,
 
     var subCategory: String,
     var productName: String,
