@@ -15,5 +15,5 @@ class CategoryItem(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoryId")
-    var categoryId: Category
+    var category: Category
 )
