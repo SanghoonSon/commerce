@@ -9,6 +9,6 @@ class Category(
     @Column(name ="category_id")
     val categoryId: Long? = null,
 
-    @OneToMany(mappedBy = "Category")
+    @OneToMany(mappedBy = "category")
     val categoryItem: List<CategoryItem>
 )
