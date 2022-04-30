@@ -7,7 +7,7 @@ import javax.persistence.*
 class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var idx: Int? = null,
+    var idx: Long? = null,
     var userId: String,
     var password: String,
     var phoneNumber: String,
