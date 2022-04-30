@@ -6,7 +6,7 @@ import javax.persistence.*
 @Table(name = "products")
 
 class Product(
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val productId: Long? = null,
 
     @OneToMany(mappedBy = "product")

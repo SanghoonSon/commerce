@@ -1,0 +1,2 @@
+insert into user(user_id, password, phone_number, email_address, gender, address, role, registered_date, fail_count, lock_status)
+values("shshon", "shshon", "010-0000-0000", "shshon@test.com", "men", "서울 테스트구 테스트동", "user", now(), 0, 0);

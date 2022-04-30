@@ -1,7 +1,10 @@
 package com.study.commerce.order.domain.entity
 
+import com.study.commerce.order.domain.enums.OrderProductStatus
 import com.study.commerce.product.domain.Product
 import com.study.commerce.shared.domain.BaseEntity
+import com.study.commerce.shared.domain.enums.Currency
+import com.study.commerce.shared.domain.vo.Money
 import javax.persistence.*
 
 @Entity
@@ -28,16 +31,24 @@ class OrderProduct(
     var price: Int = price
         protected set
 
+    @Embedded
+    @AttributeOverrides(
+        AttributeOverride(name = "price", column = Column(name = "total_cost")),
+        AttributeOverride(name = "currency", column = Column(name = "total_cost_currency", length = 5))
+    )
+    var totalCost: Money = Money(this.price * this.quantity, Currency.KRW)
+
+    @Column(nullable = false, length = 10)
+    @Enumerated(EnumType.STRING)
+    var status: OrderProductStatus = OrderProductStatus.PENDING
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     lateinit var order: Order
 
-    fun addProduct(quantity: Int) {
+    fun increaseQuantity(quantity: Int) {
         this.quantity += quantity
-    }
-
-    fun getTotalPrice(): Int {
-        return this.price * this.quantity
+        this.totalCost = Money(this.price * this.quantity, Currency.KRW)
     }
 
     fun changeQuantity(quantity: Int) {
@@ -46,5 +57,6 @@ class OrderProduct(
 
     fun cancel() {
         // TODO shshon: 상품 수량 증가 필요
+        this.status = OrderProductStatus.CANCELLED
     }
 }
