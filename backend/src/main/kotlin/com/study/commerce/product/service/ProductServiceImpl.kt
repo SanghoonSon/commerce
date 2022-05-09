@@ -3,6 +3,7 @@ package com.study.commerce.product.service
 import com.study.commerce.product.domain.Product
 import com.study.commerce.product.exception.NoDataFoundException
 import com.study.commerce.product.repository.ProductRepository
+import com.study.commerce.product.service.dto.ProductDto
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -25,6 +26,12 @@ class ProductServiceImpl(var productRepository: ProductRepository) : ProductServ
 
     override fun getProduct(): List<Product> {
         return productRepository.findAll()
+    }
+
+    override fun getProducts(productIds: List<Long>): List<ProductDto> {
+        return productRepository.findAllById(productIds)
+            .map { ProductDto.fromEntity(it) }
+            .toList()
     }
 
     @Transactional
