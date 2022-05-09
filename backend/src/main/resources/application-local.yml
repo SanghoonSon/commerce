@@ -5,40 +5,22 @@ spring:
     password: shshon
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-  jpa:
-    hibernate:
-      database-platform: org.hibernate.dialect
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
-        format_sql: true
-        default_batch_fetch_size: 100
-    open-in-view: false
-
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
-
-  redis:
-    lettuce:
-      pool:
-        max-active: 10
-        max-idle: 10
-        min-idle: 2
-    port: 6379
-    host: 127.0.0.1
-    password: redispwd
-
-springdoc:
-  default-consumes-media-type: application/json
-  default-produces-media-type: application/json
-  swagger-ui:
-    path: /swagger-ui.html
-    disable-swagger-default-url: true
-    display-query-params-without-oauth2: true
+#  redis:
+#    lettuce:
+#      pool:
+#        max-active: 10
+#        max-idle: 10
+#        min-idle: 2
+#    port: 6379
+#    host: 127.0.0.1
+#    password: redispwd
 
 decorator:
   datasource:
     p6spy:
       enable-logging: true
+
+payment:
+  client:
+    key: 4860325191563642
+    secret: a1186f2244264fd5a4fda77cc1bf7e72d43eec968dfa02e4fa650132515790eb88abf239523c1e0a
