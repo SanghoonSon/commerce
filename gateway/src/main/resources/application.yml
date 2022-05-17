@@ -1,0 +1,15 @@
+server:
+  port: 0
+
+spring:
+  application:
+    name: gateway-server
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: https://github.com/kmu-study/commerce-config-repo.git
+
+logging:
+  level:
+    org.springframework.cloud.gateway: debug
