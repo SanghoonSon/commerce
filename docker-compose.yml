@@ -4,12 +4,13 @@ services:
     image: rabbitmq:3-management-alpine
     container_name: rabbitmq-stream
     volumes:
-      - ~/dev/.docker/rabbitmq/etc/:/etc/rabbitmq/
-      - ~/dev/.docker/rabbitmq/data/:/var/lib/rabbitmq/
-      - ~/dev/.docker/rabbitmq/logs/:/var/log/rabbitmq/
+      - ~/dev/docker/volume/rabbitmq/etc/:/etc/rabbitmq/
+      - ~/dev/docker/volume/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/dev/docker/volume/rabbitmq/logs/:/var/log/rabbitmq/
     ports:
       - "5672:5672"
       - "15672:15672"
+    restart: always
     environment:
       RABBITMQ_ERLANG_COOKIE: "RabbitMQ-My-Cookies"
       RABBITMQ_DEFAULT_USER: "admin"
@@ -22,6 +23,7 @@ services:
     image: wurstmeister/zookeeper
     ports: #주키퍼,카프카 포트는 알아두자
       - "2181:2181"
+    restart: always
     networks:
       - commerce-network
 
@@ -30,33 +32,46 @@ services:
     image: wurstmeister/kafka
     ports:
       - "9092:9092"
+    restart: always
     environment:
       KAFKA_ADVERTISED_HOST_NAME: 192.168.219.102
       #카프카 토픽 생성
-      KAFKA_CREATE_TOPICS: "commerce_member:1:1,commerce_order:1:1,commerce_product:1:1"
+      KAFKA_CREATE_TOPICS: "commerce_user:1:1,commerce_order:1:1,commerce_product:1:1"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
-      - ~/dev/.docker/docker.sock:/var/run/docker.sock
+      - ~/dev/docker/volume/docker/volume.sock:/var/run/docker/volume.sock
     depends_on:
       - zookeeper
     networks:
       - commerce-network
 
-  memberDatabase:
+  userDatabase:
     image: mariadb
-    container_name: memberDatabase
+    container_name: userDatabase
     ports:
       - 3380:3306
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 1112
-      MYSQL_DATABASE: member
-      MYSQL_USER: memberdb
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: userdb
+      MYSQL_USER: myuser
       MYSQL_PASSWORD: qwer1234
     volumes:
-      - ~/dev/.docker/memberDatabase:/var/lib/mysql
+      - ~/dev/docker/volume/userDatabase:/var/lib/mysql
     networks:
       - commerce-network
+
+  userRedis:
+    image: redis:latest
+    container_name: userRedis
+    hostname: userRedis
+    ports:
+      - "6379:6379"
+    restart: always
+    volumes:
+      - ~/dev/docker/volume/userRedis/data:/data
+      - ~/dev/docker/volume/userRedis/conf/redis.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
 
   productDatabase:
     image: mariadb
@@ -65,12 +80,12 @@ services:
       - 3390:3306
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 1112
-      MYSQL_DATABASE: product
-      MYSQL_USER: productdb
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: productdb
+      MYSQL_USER: myproduct
       MYSQL_PASSWORD: qwer1234
     volumes:
-      - ~/dev/.docker/productDatabase:/var/lib/mysql
+      - ~/dev/docker/volume/productDatabase:/var/lib/mysql
     networks:
       - commerce-network
 
