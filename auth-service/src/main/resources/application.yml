@@ -1,0 +1,99 @@
+server:
+  port: 8999
+  servlet:
+    encoding:
+      charset: UTF-8
+      force-response: true
+
+spring:
+  application:
+    name: auth-service
+  cloud:
+    config:
+      enabled: false
+  main:
+    allow-bean-definition-overriding: true
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: 6bceaf8214b42967d327
+            clientSecret: 1769b6ff044f758ccfa8b9f1d4c8b360c6f203d4
+            redirectUri: "http://localhost:8000/oauth2/callback/{registrationId}"
+            scope:
+              - user:email
+              - read:user
+
+  redis:
+    host: localhost # elasticache의 redis 인스턴스 엔드포인트
+    port: 6379
+    lettuce:
+      pool:
+        max-active: 15
+        max-idle: 8
+        min-idle: 3
+        max-wait: -1
+      shutdown-timeout: 2000
+    timeout: 3000
+  cache:
+    type: redis
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://127.0.0.1:3380/userdb
+    username: myuser
+    password: qwer1234
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+      path: /h2-console
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans
+
+app:
+  auth:
+    tokenSecret: 04ca023b39512e46d0c2cf4b48d5aac61d34302994c87ed4eff225dcf3b0a218739f3897051a057f9b846a69ea2927a587044164b7bae5e1306219d50b588cb1
+    tokenExpirationMsec: 864000000
+    refreshTokenExpirationMsec: 864000000
+  cors:
+    allowedOrigins: http://localhost:3000,http://localhost:8080
+  oauth2:
+    # After successfully authenticating with the OAuth2 Provider,
+    # we'll be generating an auth token for the user and sending the token to the
+    # redirectUri mentioned by the client in the /oauth2/authorize request.
+    # We're not using cookies because they won't work well in mobile clients.
+    authorizedRedirectUris:
+      - http://localhost:3000/oauth2/redirect
+      - myandroidapp://oauth2/redirect
+      - myiosapp://oauth2/redirect
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+        web:
+          filter: TRACE
